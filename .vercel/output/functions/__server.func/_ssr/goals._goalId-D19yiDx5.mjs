@@ -1,6 +1,6 @@
 import { _ as createFileRoute, g as lazyRouteComponent } from "../_libs/@tanstack/react-router+[...].mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/goals._goalId-B0Cn4llP.js
-var $$splitComponentImporter = () => import("./goals._goalId-BtQi5z74.mjs");
+//#region node_modules/.nitro/vite/services/ssr/assets/goals._goalId-D19yiDx5.js
+var $$splitComponentImporter = () => import("./goals._goalId-BSWe8TQm.mjs");
 var Route = createFileRoute("/goals/$goalId")({
 	head: () => ({ meta: [
 		{ title: "Your goal plan — Groww Goals" },

@@ -1,9 +1,10 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { Info, Plane, Target, Check, X } from "lucide-react";
 import { Screen, Card, PrimaryButton, Progress, inr } from "@/components/groww/shell";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useGoal } from "@/components/groww/goal-state";
+import { useGoal, useGoalState } from "@/components/groww/goal-state";
 import { GoalDetailsEditor } from "@/components/groww/goal-details-editor";
 import { PLAN_SETTINGS, clampPercentage } from "@/lib/goal-calculations";
 
@@ -43,6 +44,12 @@ function Slider({ value, min, max, step, onChange, label }: { value: number; min
 function GoalPlanner() {
   const navigate = useNavigate();
   const { goalId } = Route.useParams();
+  const { selectGoal } = useGoalState();
+
+  useEffect(() => {
+    if (goalId) selectGoal(goalId);
+  }, [goalId, selectGoal]);
+
   const selected = useGoal(goalId);
   if (!selected) return null;
   const { goal, updateGoal, removeGoal, simulation } = selected;

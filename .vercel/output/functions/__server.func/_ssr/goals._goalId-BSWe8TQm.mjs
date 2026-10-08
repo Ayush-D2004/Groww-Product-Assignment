@@ -3,10 +3,10 @@ import { n as require_react } from "../_libs/@radix-ui/react-compose-refs+[...].
 import { b as useNavigate } from "../_libs/@tanstack/react-router+[...].mjs";
 import { n as require_jsx_runtime } from "../_libs/react+tanstack__react-query.mjs";
 import { c as Pencil, g as Check, i as Target, s as Plane, t as X, u as Info } from "../_libs/lucide-react.mjs";
-import { a as PLAN_SETTINGS, c as Progress, d as clampPercentage, f as cn, h as useGoal, l as Screen, m as inr, n as Card, s as PrimaryButton, t as Button } from "./goal-state-neUn1kJ_.mjs";
-import { t as Route } from "./goals._goalId-B0Cn4llP.mjs";
-import { t as Input } from "./input-DrOE9DxY.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/goals._goalId-BtQi5z74.js
+import { a as PLAN_SETTINGS, c as Progress, d as clampPercentage, f as cn, g as useGoalState, h as useGoal, l as Screen, m as inr, n as Card, s as PrimaryButton, t as Button } from "./goal-state-Czef-VIJ.mjs";
+import { t as Route } from "./goals._goalId-D19yiDx5.mjs";
+import { t as Input } from "./input-Cma4XyEs.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/goals._goalId-BSWe8TQm.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function GoalDetailsEditor({ goal, onSave }) {
@@ -155,6 +155,10 @@ function Slider({ value, min, max, step, onChange, label }) {
 function GoalPlanner() {
 	const navigate = useNavigate();
 	const { goalId } = Route.useParams();
+	const { selectGoal } = useGoalState();
+	(0, import_react.useEffect)(() => {
+		if (goalId) selectGoal(goalId);
+	}, [goalId, selectGoal]);
 	const selected = useGoal(goalId);
 	if (!selected) return null;
 	const { goal, updateGoal, removeGoal, simulation } = selected;

@@ -3,13 +3,13 @@ import { n as require_react } from "../_libs/@radix-ui/react-compose-refs+[...].
 import { y as Link } from "../_libs/@tanstack/react-router+[...].mjs";
 import { n as require_jsx_runtime } from "../_libs/react+tanstack__react-query.mjs";
 import { _ as ChartPie, b as ChartCandlestick, i as Target, l as Layers, o as Plus, p as ChevronRight, r as TrendingUp, s as Plane, y as ChartColumn } from "../_libs/lucide-react.mjs";
-import { a as PLAN_SETTINGS, c as Progress, g as useGoalState, l as Screen, m as inr, n as Card, p as formatTargetDate, r as DEMO_WEALTH_PLAN, t as Button, u as calculateTargetDate } from "./goal-state-neUn1kJ_.mjs";
-import { t as Input } from "./input-DrOE9DxY.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-B0hx_KGt.js
+import { a as PLAN_SETTINGS, c as Progress, g as useGoalState, l as Screen, m as inr, n as Card, p as formatTargetDate, r as DEMO_WEALTH_PLAN, t as Button, u as calculateTargetDate } from "./goal-state-Czef-VIJ.mjs";
+import { t as Input } from "./input-Cma4XyEs.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/routes-CzUGBJ0s.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function Home() {
-	const { goals, simulations, createGoal, portfolio } = useGoalState();
+	const { goals, simulations, createGoal, portfolio, selectGoal } = useGoalState();
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Screen, { children: [
 		/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 			className: "text-sm text-muted-foreground",
@@ -37,6 +37,7 @@ function Home() {
 				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
 					to: "/goals/$goalId",
 					params: { goalId: goal.id },
+					onClick: () => selectGoal(goal.id),
 					className: "block",
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, {
 						className: "p-5 transition-colors hover:border-primary/40",

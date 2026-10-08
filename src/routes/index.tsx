@@ -23,7 +23,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const { goals, simulations, createGoal, portfolio } = useGoalState();
+  const { goals, simulations, createGoal, portfolio, selectGoal } = useGoalState();
   return (
     <Screen>
       <p className="text-sm text-muted-foreground">Hi Aarav</p>
@@ -39,7 +39,7 @@ function Home() {
           if (!simulation) return null;
           const GoalIcon = goal.icon === "plane" ? Plane : Target;
           return (
-            <Link key={goal.id} to="/goals/$goalId" params={{ goalId: goal.id }} className="block">
+            <Link key={goal.id} to="/goals/$goalId" params={{ goalId: goal.id }} onClick={() => selectGoal(goal.id)} className="block">
               <Card className="p-5 transition-colors hover:border-primary/40">
                 <div className="flex items-start justify-between">
                   <div className="flex min-w-0 items-center gap-3">

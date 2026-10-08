@@ -1,4 +1,7 @@
+import React from "react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { GoalStateProvider, useGoalState } from "@/components/groww/goal-state";
 import { calculateSimulation, calculateFutureValue, calculateRequiredMonthlyContribution, calculateTargetDate, clampPercentage } from "@/lib/goal-calculations";
 import { DEMO_GOAL } from "@/lib/prototype-data";
 
@@ -45,5 +48,49 @@ describe("Goal calculations", () => {
     expect(calculateTargetDate("", 24)).toBe("");
     expect(clampPercentage(NaN)).toBe(0);
     expect(clampPercentage(-5)).toBe(0);
+  });
+
+  it("keeps one selected goal in state for navigation and exploration", async () => {
+    function GoalStateProbe() {
+      const { goals, selectedGoalId, selectedGoal, createGoal, selectGoal } = useGoalState();
+
+      return (
+        React.createElement(
+          React.Fragment,
+          null,
+          React.createElement("div", { "data-testid": "count" }, String(goals.length)),
+          React.createElement("div", { "data-testid": "selected-id" }, selectedGoalId ?? "none"),
+          React.createElement("div", { "data-testid": "selected-name" }, selectedGoal?.name ?? "none"),
+          React.createElement(
+            "button",
+            { type: "button", onClick: () => createGoal({ name: "MacBook", targetAmount: 120000, targetDate: "2027-12-31", initialAmount: 20000, monthlyContribution: 3000 }) },
+            "Add goal"
+          ),
+          React.createElement(
+            "button",
+            { type: "button", onClick: () => selectGoal(goals[0]?.id ?? null) },
+            "Select first"
+          )
+        )
+      );
+    }
+
+    render(
+      React.createElement(
+        GoalStateProvider,
+        null,
+        React.createElement(GoalStateProbe)
+      )
+    );
+
+    expect(screen.getByTestId("count")).toHaveTextContent("1");
+    expect(screen.getByTestId("selected-id")).toHaveTextContent("demo-goal");
+    expect(screen.getByTestId("selected-name")).toHaveTextContent("Japan trip");
+
+    fireEvent.click(screen.getByRole("button", { name: "Add goal" }));
+    await waitFor(() => expect(screen.getByTestId("selected-name")).toHaveTextContent("MacBook"));
+
+    fireEvent.click(screen.getByRole("button", { name: "Select first" }));
+    await waitFor(() => expect(screen.getByTestId("selected-name")).toHaveTextContent("Japan trip"));
   });
 });

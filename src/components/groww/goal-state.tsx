@@ -14,9 +14,13 @@ export type NewGoalInput = {
 type PrototypeState = {
   goals: Goal[];
   simulations: Map<string, Simulation>;
+  selectedGoalId: string | null;
+  selectedGoal: Goal | null;
+  selectedSimulation: Simulation | null;
   createGoal: (input: NewGoalInput) => string;
   updateGoal: (id: string, changes: GoalChanges) => void;
   deleteGoal: (id: string) => void;
+  selectGoal: (id: string | null) => void;
   portfolio: typeof DEMO_PORTFOLIO;
 };
 
@@ -27,12 +31,28 @@ const newGoalId = () => (typeof crypto !== "undefined" && "randomUUID" in crypto
 
 export function GoalStateProvider({ children }: { children: ReactNode }) {
   const [goals, setGoals] = useState<Goal[]>(() => DEMO_GOALS.map(goal => ({ ...goal })));
+  const [selectedGoalId, setSelectedGoalId] = useState<string | null>(() => DEMO_GOALS[0]?.id ?? null);
   const [portfolio] = useState(() => DEMO_PORTFOLIO);
+
   useEffect(() => {
     // Demo goals ship without a creation date so server and client render the same markup; stamp it after hydration.
     setGoals(current => current.some(goal => !goal.createdAt) ? current.map(goal => goal.createdAt ? goal : { ...goal, createdAt: today() }) : current);
   }, []);
+
+  useEffect(() => {
+    if (!goals.length) {
+      setSelectedGoalId(null);
+      return;
+    }
+
+    if (!selectedGoalId || !goals.some(goal => goal.id === selectedGoalId)) {
+      setSelectedGoalId(goals[0].id);
+    }
+  }, [goals, selectedGoalId]);
+
   const simulations = useMemo(() => new Map(goals.map(goal => [goal.id, calculateSimulation(goal)])), [goals]);
+  const selectedGoal = useMemo(() => goals.find(goal => goal.id === selectedGoalId) ?? null, [goals, selectedGoalId]);
+  const selectedSimulation = useMemo(() => (selectedGoal ? simulations.get(selectedGoal.id) ?? null : null), [selectedGoal, simulations]);
 
   function createGoal(input: NewGoalInput) {
     const createdAt = today();
@@ -48,6 +68,7 @@ export function GoalStateProvider({ children }: { children: ReactNode }) {
     };
     const goal = applyGoalChanges(base, input);
     setGoals(current => [...current, goal]);
+    setSelectedGoalId(goal.id);
     return goal.id;
   }
 
@@ -56,10 +77,20 @@ export function GoalStateProvider({ children }: { children: ReactNode }) {
   }
 
   function deleteGoal(id: string) {
-    setGoals(current => current.filter(goal => goal.id !== id));
+    setGoals(current => {
+      const remaining = current.filter(goal => goal.id !== id);
+      if (selectedGoalId === id) {
+        setSelectedGoalId(remaining[0]?.id ?? null);
+      }
+      return remaining;
+    });
   }
 
-  return <StateContext.Provider value={{ goals, simulations, createGoal, updateGoal, deleteGoal, portfolio }}>{children}</StateContext.Provider>;
+  function selectGoal(id: string | null) {
+    setSelectedGoalId(id && goals.some(goal => goal.id === id) ? id : (goals[0]?.id ?? null));
+  }
+
+  return <StateContext.Provider value={{ goals, simulations, selectedGoalId, selectedGoal, selectedSimulation, createGoal, updateGoal, deleteGoal, selectGoal, portfolio }}>{children}</StateContext.Provider>;
 }
 
 export function useGoalState() {

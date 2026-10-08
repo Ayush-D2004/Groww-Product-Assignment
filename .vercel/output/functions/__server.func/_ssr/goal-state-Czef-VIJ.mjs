@@ -6,7 +6,7 @@ import { S as Bell, _ as ChartPie, a as Search, d as House, m as ChevronLeft, v 
 import { t as Slot } from "../_libs/radix-ui__react-slot.mjs";
 import { n as clsx, t as cva } from "../_libs/class-variance-authority+clsx.mjs";
 import { t as twMerge } from "../_libs/tailwind-merge.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/goal-state-neUn1kJ_.js
+//#region node_modules/.nitro/vite/services/ssr/assets/goal-state-Czef-VIJ.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function cn(...inputs) {
@@ -356,6 +356,7 @@ var today = () => (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
 var newGoalId = () => typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : `goal-${Date.now()}`;
 function GoalStateProvider({ children }) {
 	const [goals, setGoals] = (0, import_react.useState)(() => DEMO_GOALS.map((goal) => ({ ...goal })));
+	const [selectedGoalId, setSelectedGoalId] = (0, import_react.useState)(() => DEMO_GOALS[0]?.id ?? null);
 	const [portfolio] = (0, import_react.useState)(() => DEMO_PORTFOLIO);
 	(0, import_react.useEffect)(() => {
 		setGoals((current) => current.some((goal) => !goal.createdAt) ? current.map((goal) => goal.createdAt ? goal : {
@@ -363,7 +364,16 @@ function GoalStateProvider({ children }) {
 			createdAt: today()
 		}) : current);
 	}, []);
+	(0, import_react.useEffect)(() => {
+		if (!goals.length) {
+			setSelectedGoalId(null);
+			return;
+		}
+		if (!selectedGoalId || !goals.some((goal) => goal.id === selectedGoalId)) setSelectedGoalId(goals[0].id);
+	}, [goals, selectedGoalId]);
 	const simulations = (0, import_react.useMemo)(() => new Map(goals.map((goal) => [goal.id, calculateSimulation(goal)])), [goals]);
+	const selectedGoal = (0, import_react.useMemo)(() => goals.find((goal) => goal.id === selectedGoalId) ?? null, [goals, selectedGoalId]);
+	const selectedSimulation = (0, import_react.useMemo)(() => selectedGoal ? simulations.get(selectedGoal.id) ?? null : null, [selectedGoal, simulations]);
 	function createGoal(input) {
 		const createdAt = today();
 		const goal = applyGoalChanges({
@@ -377,21 +387,33 @@ function GoalStateProvider({ children }) {
 			createdAt
 		}, input);
 		setGoals((current) => [...current, goal]);
+		setSelectedGoalId(goal.id);
 		return goal.id;
 	}
 	function updateGoal(id, changes) {
 		setGoals((current) => current.map((goal) => goal.id === id ? applyGoalChanges(goal, changes) : goal));
 	}
 	function deleteGoal(id) {
-		setGoals((current) => current.filter((goal) => goal.id !== id));
+		setGoals((current) => {
+			const remaining = current.filter((goal) => goal.id !== id);
+			if (selectedGoalId === id) setSelectedGoalId(remaining[0]?.id ?? null);
+			return remaining;
+		});
+	}
+	function selectGoal(id) {
+		setSelectedGoalId(id && goals.some((goal) => goal.id === id) ? id : goals[0]?.id ?? null);
 	}
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StateContext.Provider, {
 		value: {
 			goals,
 			simulations,
+			selectedGoalId,
+			selectedGoal,
+			selectedSimulation,
 			createGoal,
 			updateGoal,
 			deleteGoal,
+			selectGoal,
 			portfolio
 		},
 		children

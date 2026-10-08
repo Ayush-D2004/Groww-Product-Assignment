@@ -39,7 +39,11 @@ const items = [
 
 function Explore() {
   const [open, setOpen] = useState<number | null>(null);
-  const { goal } = useGoalState();
+  const { selectedGoal } = useGoalState();
+  const goal = selectedGoal;
+
+  if (!goal) return null;
+
   return (
     <Screen back nav={false}>
       <p className="break-words text-xs font-medium text-muted-foreground">For your {goal.name} goal</p>

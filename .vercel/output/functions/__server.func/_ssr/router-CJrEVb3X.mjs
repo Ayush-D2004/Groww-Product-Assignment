@@ -2,10 +2,10 @@ import { r as __toESM } from "../_runtime.mjs";
 import { n as require_react } from "../_libs/@radix-ui/react-compose-refs+[...].mjs";
 import { _ as createFileRoute, d as Scripts, f as HeadContent, g as lazyRouteComponent, h as Outlet, m as createRouter, v as createRootRouteWithContext, x as useRouter, y as Link } from "../_libs/@tanstack/react-router+[...].mjs";
 import { n as require_jsx_runtime, t as QueryClientProvider } from "../_libs/react+tanstack__react-query.mjs";
-import { i as GoalStateProvider, o as PhoneFrame } from "./goal-state-neUn1kJ_.mjs";
-import { t as Route$4 } from "./goals._goalId-B0Cn4llP.mjs";
+import { i as GoalStateProvider, o as PhoneFrame } from "./goal-state-Czef-VIJ.mjs";
+import { t as Route$4 } from "./goals._goalId-D19yiDx5.mjs";
 import { t as QueryClient } from "../_libs/tanstack__query-core.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-CxFNmu2Q.js
+//#region node_modules/.nitro/vite/services/ssr/assets/router-CJrEVb3X.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var styles_default = "/assets/styles-veGGcZn1.css";
@@ -156,7 +156,7 @@ function RootComponent() {
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(GoalStateProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PhoneFrame, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Outlet, {}) }) })
 	});
 }
-var $$splitComponentImporter$2 = () => import("./routes-B0hx_KGt.mjs");
+var $$splitComponentImporter$2 = () => import("./routes-CzUGBJ0s.mjs");
 var Route$2 = createFileRoute("/")({
 	head: () => ({ meta: [
 		{ title: "Groww Goals — What are you investing for?" },
@@ -183,7 +183,7 @@ var Route$2 = createFileRoute("/")({
 	] }),
 	component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-var $$splitComponentImporter$1 = () => import("./explore-BFIDfkjB.mjs");
+var $$splitComponentImporter$1 = () => import("./explore-BSZRlFel.mjs");
 var Route$1 = createFileRoute("/explore")({
 	head: () => ({ meta: [
 		{ title: "Understand before you invest — Groww Goals" },
@@ -210,7 +210,7 @@ var Route$1 = createFileRoute("/explore")({
 	] }),
 	component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-var $$splitComponentImporter = () => import("./portfolio-Bl4tK_B3.mjs");
+var $$splitComponentImporter = () => import("./portfolio-B57itTNH.mjs");
 var Route = createFileRoute("/portfolio")({
 	head: () => ({ meta: [
 		{ title: "Portfolio health — Groww Goals" },
