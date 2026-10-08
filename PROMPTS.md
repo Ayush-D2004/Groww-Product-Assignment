@@ -1,8 +1,6 @@
 # Prompt Archive and Product Engineering Notes
 
-This file documents the prompt sequence used to shape the prototype and makes the intent behind the work explicit. It is written to show that the implementation was driven by disciplined product thinking, architectural discipline, and verification, not by a single unstructured AI generation pass.
-
-The goal is to demonstrate mature use of AI-assisted coding tools: clear context, constrained scope, iterative improvement, and validation against real behavior before claiming the work is complete.
+This file documents the prompt sequence used to shape the prototype and makes the intent behind the work explicit.
 
 ---
 
@@ -389,21 +387,3 @@ This is essential because AI-driven code generation often introduces superficial
 ### Quality bar
 
 The implementation should not be considered done merely because it “looks right.” It must pass the product and technical checks: logic continuity, state consistency, and behavior under realistic edge conditions.
-
----
-
-## 7. Prompting and AI Workflow Principles
-
-This project demonstrates the value of a mature AI-assisted workflow:
-
-- start with clear product intent and constraints
-- define the user value and non-goals explicitly
-- narrow the scope before asking for implementation
-- preserve the original visual structure while changing the logic layer
-- validate behavior after each meaningful change
-- test before claiming success
-- fix the root cause instead of layering quick patches
-
-A strong prompt is not just a request for code. It is a system for guiding the model toward the right trade-off between product intent, technical structure, and verification discipline.
-
-This prompt set was deliberately structured to do that.
